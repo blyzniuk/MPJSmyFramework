@@ -1,6 +1,6 @@
 {
   "name": "mpjs-my-framework",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MPJS Homework",
   "author": "Oleksandr Blyzniuk <blyzniuk.oleksandr@gmail.com>",
   "contributors": [
@@ -50,9 +50,7 @@
   },
   "preferGlobal": false,
   "private": false,
-  "publishConfig": {
-    "registry": ""
-  },
+  "publishConfig": {},
   "subdomain": "foobar",
   "analyze": true,
   "license": "MIT"
