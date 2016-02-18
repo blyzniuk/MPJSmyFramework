@@ -1,7 +1,6 @@
 import Provider from './provider.js';
 import crossroads from 'crossroads';
 import hasher from 'hasher';
-import signals from 'signals';
 
 const Compiler = {
     bootstrap() {

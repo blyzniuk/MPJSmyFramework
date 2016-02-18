@@ -1,3 +1,5 @@
+import framework from './../framework';
+
 export default () => {
     return {
         scope: true,

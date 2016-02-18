@@ -3,26 +3,28 @@
   "version": "1.0.1",
   "description": "MPJS Homework",
   "author": "Oleksandr Blyzniuk <blyzniuk.oleksandr@gmail.com>",
-  "contributors": [{
-  "name": "Oleksandr Blyzniuk",
-  "email": "blyzniuk.oleksandr@gmail.com"
-}],
+  "contributors": [
+    {
+      "name": "Oleksandr Blyzniuk",
+      "email": "blyzniuk.oleksandr@gmail.com"
+    }
+  ],
   "bin": {},
   "scripts": {
-    "test": "karma start",
-    "start": "gulp build"
+    "start": "gulp build",
+    "test": "karma start"
   },
   "main": "build/famework.js",
   "repository": {
-  "type": "git",
-  "url": "https://github.com/blyzniuk/MPJSmyFramework"
-},
+    "type": "git",
+    "url": "https://github.com/blyzniuk/MPJSmyFramework"
+  },
   "bugs": {
-  "url": "https://github.com/blyzniuk/MPJSmyFramework/issues"
-},
+    "url": "https://github.com/blyzniuk/MPJSmyFramework/issues"
+  },
   "keywords": [
-  "example"
-],
+    "example"
+  ],
   "dependencies": {
     "crossroads": "^0.12.2",
     "hasher": "^1.2.0",
@@ -33,7 +35,7 @@
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "del": "^2.2.0",
-    "eslint": "^1.10.3",
+    "eslint": "^2.1.0",
     "eslint-config-airbnb": "^3.1.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
@@ -49,8 +51,8 @@
   "preferGlobal": false,
   "private": false,
   "publishConfig": {
-  "registry": ""
-},
+    "registry": ""
+  },
   "subdomain": "foobar",
   "analyze": true,
   "license": "MIT"

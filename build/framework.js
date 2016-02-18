@@ -1,417 +1,4 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _provider = require('./provider.js');
-
-var _provider2 = _interopRequireDefault(_provider);
-
-var _crossroads = require('crossroads');
-
-var _crossroads2 = _interopRequireDefault(_crossroads);
-
-var _hasher = require('hasher');
-
-var _hasher2 = _interopRequireDefault(_hasher);
-
-var _signals = require('signals');
-
-var _signals2 = _interopRequireDefault(_signals);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Compiler = {
-    bootstrap: function bootstrap() {
-        this.compile(document.body, _provider2.default.get('$rootScope'));
-        function parseHash(newHash) {
-            _crossroads2.default.parse(newHash);
-        }
-
-        _hasher2.default.initialized.add(parseHash);
-
-        _hasher2.default.changed.add(parseHash);
-        _hasher2.default.init();
-    },
-    compile: function compile(el, scope) {
-        var _this = this;
-
-        var dirs = this._getElDirectives(el);
-        var dir = undefined;
-        var scopeCreated = undefined;
-        dirs.forEach(function (d) {
-            dir = _provider2.default.get(d.name + 'Directive');
-            if (dir.scope && !scopeCreated) {
-                scope = scope.$new();
-                scopeCreated = true;
-            }
-            dir.link(el, scope, d.value);
-        });
-        Array.prototype.slice.call(el.children).forEach(function (c) {
-            _this.compile(c, scope);
-        }, this);
-    },
-    _getElDirectives: function _getElDirectives(el) {
-        var attrs = el.attributes;
-        var result = [];
-        for (var i = 0; i < attrs.length; i++) {
-            if (_provider2.default.get(attrs[i].name + 'Directive')) {
-                result.push({
-                    name: attrs[i].name,
-                    value: attrs[i].value
-                });
-            }
-        }
-        return result;
-    }
-};
-
-exports.default = Compiler;
-
-},{"./provider.js":8,"crossroads":10,"hasher":11,"signals":12}],2:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-exports.default = function () {
-    return {
-        scope: false,
-        link: function link(el, scope, exp) {
-            el.innerHTML = scope.$eval(exp);
-            scope.$watch(exp, function (val) {
-                el.innerHTML = val;
-            });
-        }
-    };
-};
-
-},{}],3:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-exports.default = function () {
-    return {
-        scope: false,
-        link: function link(el, scope, exp) {
-            el.onclick = function () {
-                scope.$eval(exp);
-                scope.$digest();
-            };
-        }
-    };
-};
-
-},{}],4:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-exports.default = function () {
-    return {
-        scope: true,
-        link: function link(el, scope, exp) {
-            var ctrl = framework.Provider.get(exp + "Controller");
-            framework.Provider.invoke(ctrl, { $scope: scope });
-        }
-    };
-};
-
-},{}],5:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-exports.default = function () {
-    return {
-        link: function link(el, scope, exp) {
-            el.onkeyup = function () {
-                scope[exp] = el.value;
-                scope.$digest();
-            };
-            scope.$watch(exp, function (val) {
-                el.value = val;
-            });
-        }
-    };
-};
-
-},{}],6:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-exports.default = function () {
-    return {
-        scope: false,
-        link: function link(el, scope, exp) {
-            var scopes = [];
-            var parts = exp.split('in');
-            var collectionName = parts[1].trim();
-            var itemName = parts[0].trim();
-            var parentNode = el.parentNode;
-
-            function render(val) {
-                var els = val;
-                var currentNode = undefined;
-                var s = undefined;
-                while (parentNode.firstChild) {
-                    parentNode.removeChild(parentNode.firstChild);
-                }
-                scopes.forEach(function (sc) {
-                    sc.$destroy();
-                });
-                scopes = [];
-                els.forEach(function (value) {
-                    currentNode = el.cloneNode();
-                    currentNode.removeAttribute('mvc-repeat');
-                    currentNode.removeAttribute('mvc-scope');
-                    s = scope.$new();
-                    scopes.push(s);
-                    s[itemName] = value;
-                    framework.Compiler.compile(currentNode, s);
-                    parentNode.appendChild(currentNode);
-                });
-            }
-
-            scope.$watch(collectionName, render);
-            render(scope.$eval(collectionName));
-        }
-    };
-};
-
-},{}],7:[function(require,module,exports){
-'use strict';
-
-var _provider = require('./provider.js');
-
-var _provider2 = _interopRequireDefault(_provider);
-
-var _compiler = require('./compiler.js');
-
-var _compiler2 = _interopRequireDefault(_compiler);
-
-var _mvcBind = require('./directives/mvc-bind.js');
-
-var _mvcBind2 = _interopRequireDefault(_mvcBind);
-
-var _mvcClick = require('./directives/mvc-click.js');
-
-var _mvcClick2 = _interopRequireDefault(_mvcClick);
-
-var _mvcController = require('./directives/mvc-controller.js');
-
-var _mvcController2 = _interopRequireDefault(_mvcController);
-
-var _mvcModel = require('./directives/mvc-model.js');
-
-var _mvcModel2 = _interopRequireDefault(_mvcModel);
-
-var _mvcRepeat = require('./directives/mvc-repeat.js');
-
-var _mvcRepeat2 = _interopRequireDefault(_mvcRepeat);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-document.addEventListener('DOMContentLoaded', function () {
-    return _compiler2.default.bootstrap();
-});
-window.framework = {
-    Provider: _provider2.default,
-    Compiler: _compiler2.default
-};
-
-_provider2.default.directive('mvc-bind', _mvcBind2.default);
-_provider2.default.directive('mvc-click', _mvcClick2.default);
-_provider2.default.directive('mvc-controller', _mvcController2.default);
-_provider2.default.directive('mvc-model', _mvcModel2.default);
-_provider2.default.directive('mvc-repeat', _mvcRepeat2.default);
-
-},{"./compiler.js":1,"./directives/mvc-bind.js":2,"./directives/mvc-click.js":3,"./directives/mvc-controller.js":4,"./directives/mvc-model.js":5,"./directives/mvc-repeat.js":6,"./provider.js":8}],8:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _scope = require('./scope.js');
-
-var _scope2 = _interopRequireDefault(_scope);
-
-var _compiler = require('./compiler.js');
-
-var _compiler2 = _interopRequireDefault(_compiler);
-
-var _crossroads = require('crossroads');
-
-var _crossroads2 = _interopRequireDefault(_crossroads);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Provider = {
-    _cache: {
-        $rootScope: new _scope2.default()
-    },
-    _providers: {},
-    get: function get(name, locals) {
-        if (this._cache[name]) {
-            return this._cache[name];
-        }
-        var provider = this._providers[name];
-        if (!provider || typeof provider !== 'function') {
-            return null;
-        }
-        return this._cache[name] = this.invoke(provider, locals);
-    },
-    directive: function directive(name, fn) {
-        this._register(name + 'Directive', fn);
-    },
-    controller: function controller(name, fn) {
-        this._register(name + 'Controller', function () {
-            return fn;
-        });
-    },
-    service: function service(name, fn) {
-        this._register(name, fn);
-    },
-    annotate: function annotate(fn) {
-        var res = fn.toString().replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg, '').match(/\((.*?)\)/);
-        if (res && res[1]) {
-            return res[1].split(',').map(function (d) {
-                return d.trim();
-            });
-        }
-        return [];
-    },
-    invoke: function invoke(fn) {
-        var _this = this;
-
-        var locals = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-        var deps = this.annotate(fn).map(function (s) {
-            return locals[s] || _this.get(s, locals);
-        }, this);
-        return fn.apply(null, deps);
-    },
-    _register: function _register(name, service) {
-        this._providers[name] = service;
-    },
-    route: function route(_route, tpl, controller) {
-        var _this2 = this;
-
-        var newRoute = _crossroads2.default.addRoute(_route);
-        newRoute.matched.add(function () {
-            var view = document.getElementById('mvc-view');
-            view.innerHTML = tpl;
-
-            var ctrl = _this2.get(controller + 'Controller');
-            var scope = _this2._cache.$rootScope.$new();
-            _this2.invoke(ctrl, { $scope: scope });
-            _compiler2.default.compile(view, scope);
-        });
-    }
-};
-
-exports.default = Provider;
-
-},{"./compiler.js":1,"./scope.js":9,"crossroads":10}],9:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Scope = function () {
-    function Scope(parent) {
-        _classCallCheck(this, Scope);
-
-        this.$$watchers = [];
-        this.$$children = [];
-        this.$parent = parent;
-    }
-
-    _createClass(Scope, [{
-        key: '$watch',
-        value: function $watch(exp, fn) {
-            this.$$watchers.push({
-                exp: exp,
-                fn: fn,
-                last: JSON.parse(JSON.stringify(this.$eval(exp)))
-            });
-        }
-    }, {
-        key: '$eval',
-        value: function $eval(exp) {
-            if (typeof exp !== 'function') {
-                try {
-                    return eval('this.' + exp);
-                } catch (e) {
-                    return '';
-                }
-            }
-            return exp.call(this);
-        }
-    }, {
-        key: '$new',
-        value: function $new() {
-            var obj = new Scope(this);
-            this.$$children.push(obj);
-            return obj;
-        }
-    }, {
-        key: '$destroy',
-        value: function $destroy() {
-            var pc = this.$parent.$$children;
-            pc.splice(pc.indexOf(this), 1);
-        }
-    }, {
-        key: '$digest',
-        value: function $digest() {
-            var _this = this;
-
-            var dirty = undefined;
-            var current = undefined;
-
-            do {
-                dirty = false;
-                this.$$watchers.forEach(function (watcher) {
-                    current = _this.$eval(watcher.exp);
-                    if (JSON.stringify(watcher.last) !== JSON.stringify(current)) {
-                        watcher.last = JSON.parse(JSON.stringify(current));
-                        dirty = true;
-                        watcher.fn(current);
-                    }
-                });
-            } while (dirty);
-
-            this.$$children.forEach(function (child) {
-                return child.$digest();
-            });
-        }
-    }]);
-
-    return Scope;
-}();
-
-exports.default = Scope;
-
-},{}],10:[function(require,module,exports){
 /** @license
  * crossroads <http://millermedeiros.github.com/crossroads.js/>
  * Author: Miller Medeiros | MIT License
@@ -1138,7 +725,7 @@ if (typeof define === 'function' && define.amd) {
 }());
 
 
-},{"signals":12}],11:[function(require,module,exports){
+},{"signals":3}],2:[function(require,module,exports){
 /*!!
  * Hasher <http://github.com/millermedeiros/hasher>
  * @author Miller Medeiros
@@ -1581,7 +1168,7 @@ if (typeof define === 'function' && define.amd) {
 
 }());
 
-},{"signals":12}],12:[function(require,module,exports){
+},{"signals":3}],3:[function(require,module,exports){
 /*jslint onevar:true, undef:true, newcap:true, regexp:true, bitwise:true, maxerr:50, indent:4, white:false, nomen:false, plusplus:false */
 /*global define:false, require:false, exports:false, module:false, signals:false */
 
@@ -2028,4 +1615,431 @@ if (typeof define === 'function' && define.amd) {
 
 }(this));
 
-},{}]},{},[7]);
+},{}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _provider = require('./provider.js');
+
+var _provider2 = _interopRequireDefault(_provider);
+
+var _crossroads = require('crossroads');
+
+var _crossroads2 = _interopRequireDefault(_crossroads);
+
+var _hasher = require('hasher');
+
+var _hasher2 = _interopRequireDefault(_hasher);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Compiler = {
+    bootstrap: function bootstrap() {
+        this.compile(document.body, _provider2.default.get('$rootScope'));
+        function parseHash(newHash) {
+            _crossroads2.default.parse(newHash);
+        }
+
+        _hasher2.default.initialized.add(parseHash);
+
+        _hasher2.default.changed.add(parseHash);
+        _hasher2.default.init();
+    },
+    compile: function compile(el, scope) {
+        var _this = this;
+
+        var dirs = this._getElDirectives(el);
+        var dir = undefined;
+        var scopeCreated = undefined;
+        dirs.forEach(function (d) {
+            dir = _provider2.default.get(d.name + 'Directive');
+            if (dir.scope && !scopeCreated) {
+                scope = scope.$new();
+                scopeCreated = true;
+            }
+            dir.link(el, scope, d.value);
+        });
+        Array.prototype.slice.call(el.children).forEach(function (c) {
+            _this.compile(c, scope);
+        }, this);
+    },
+    _getElDirectives: function _getElDirectives(el) {
+        var attrs = el.attributes;
+        var result = [];
+        for (var i = 0; i < attrs.length; i++) {
+            if (_provider2.default.get(attrs[i].name + 'Directive')) {
+                result.push({
+                    name: attrs[i].name,
+                    value: attrs[i].value
+                });
+            }
+        }
+        return result;
+    }
+};
+
+exports.default = Compiler;
+
+},{"./provider.js":11,"crossroads":1,"hasher":2}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function () {
+    return {
+        scope: false,
+        link: function link(el, scope, exp) {
+            el.innerHTML = scope.$eval(exp);
+            scope.$watch(exp, function (val) {
+                el.innerHTML = val;
+            });
+        }
+    };
+};
+
+},{}],6:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function () {
+    return {
+        scope: false,
+        link: function link(el, scope, exp) {
+            el.onclick = function () {
+                scope.$eval(exp);
+                scope.$digest();
+            };
+        }
+    };
+};
+
+},{}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _framework = require('./../framework');
+
+var _framework2 = _interopRequireDefault(_framework);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+    return {
+        scope: true,
+        link: function link(el, scope, exp) {
+            var ctrl = _framework2.default.Provider.get(exp + 'Controller');
+            _framework2.default.Provider.invoke(ctrl, { $scope: scope });
+        }
+    };
+};
+
+},{"./../framework":10}],8:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function () {
+    return {
+        link: function link(el, scope, exp) {
+            el.onkeyup = function () {
+                scope[exp] = el.value;
+                scope.$digest();
+            };
+            scope.$watch(exp, function (val) {
+                el.value = val;
+            });
+        }
+    };
+};
+
+},{}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _framework = require('./../framework');
+
+var _framework2 = _interopRequireDefault(_framework);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+    return {
+        scope: false,
+        link: function link(el, scope, exp) {
+            var scopes = [];
+            var parts = exp.split('in');
+            var collectionName = parts[1].trim();
+            var itemName = parts[0].trim();
+            var parentNode = el.parentNode;
+
+            function render(val) {
+                var els = val;
+                var currentNode = undefined;
+                var s = undefined;
+                while (parentNode.firstChild) {
+                    parentNode.removeChild(parentNode.firstChild);
+                }
+                scopes.forEach(function (sc) {
+                    sc.$destroy();
+                });
+                scopes = [];
+                els.forEach(function (value) {
+                    currentNode = el.cloneNode();
+                    currentNode.removeAttribute('mvc-repeat');
+                    currentNode.removeAttribute('mvc-scope');
+                    s = scope.$new();
+                    scopes.push(s);
+                    s[itemName] = value;
+                    _framework2.default.Compiler.compile(currentNode, s);
+                    parentNode.appendChild(currentNode);
+                });
+            }
+
+            scope.$watch(collectionName, render);
+            render(scope.$eval(collectionName));
+        }
+    };
+};
+
+},{"./../framework":10}],10:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _provider = require('./provider.js');
+
+var _provider2 = _interopRequireDefault(_provider);
+
+var _compiler = require('./compiler.js');
+
+var _compiler2 = _interopRequireDefault(_compiler);
+
+var _mvcBind = require('./directives/mvc-bind.js');
+
+var _mvcBind2 = _interopRequireDefault(_mvcBind);
+
+var _mvcClick = require('./directives/mvc-click.js');
+
+var _mvcClick2 = _interopRequireDefault(_mvcClick);
+
+var _mvcController = require('./directives/mvc-controller.js');
+
+var _mvcController2 = _interopRequireDefault(_mvcController);
+
+var _mvcModel = require('./directives/mvc-model.js');
+
+var _mvcModel2 = _interopRequireDefault(_mvcModel);
+
+var _mvcRepeat = require('./directives/mvc-repeat.js');
+
+var _mvcRepeat2 = _interopRequireDefault(_mvcRepeat);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+document.addEventListener('DOMContentLoaded', function () {
+    return _compiler2.default.bootstrap();
+});
+window.framework = {
+    Provider: _provider2.default,
+    Compiler: _compiler2.default
+};
+
+_provider2.default.directive('mvc-bind', _mvcBind2.default);
+_provider2.default.directive('mvc-click', _mvcClick2.default);
+_provider2.default.directive('mvc-controller', _mvcController2.default);
+_provider2.default.directive('mvc-model', _mvcModel2.default);
+_provider2.default.directive('mvc-repeat', _mvcRepeat2.default);
+
+exports.default = window.framework;
+
+},{"./compiler.js":4,"./directives/mvc-bind.js":5,"./directives/mvc-click.js":6,"./directives/mvc-controller.js":7,"./directives/mvc-model.js":8,"./directives/mvc-repeat.js":9,"./provider.js":11}],11:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _scope = require('./scope.js');
+
+var _scope2 = _interopRequireDefault(_scope);
+
+var _compiler = require('./compiler.js');
+
+var _compiler2 = _interopRequireDefault(_compiler);
+
+var _crossroads = require('crossroads');
+
+var _crossroads2 = _interopRequireDefault(_crossroads);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Provider = {
+    _cache: {
+        $rootScope: new _scope2.default()
+    },
+    _providers: {},
+    get: function get(name, locals) {
+        if (this._cache[name]) {
+            return this._cache[name];
+        }
+        var provider = this._providers[name];
+        if (!provider || typeof provider !== 'function') {
+            return null;
+        }
+        return this._cache[name] = this.invoke(provider, locals);
+    },
+    directive: function directive(name, fn) {
+        this._register(name + 'Directive', fn);
+    },
+    controller: function controller(name, fn) {
+        this._register(name + 'Controller', function () {
+            return fn;
+        });
+    },
+    service: function service(name, fn) {
+        this._register(name, fn);
+    },
+    annotate: function annotate(fn) {
+        var res = fn.toString().replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg, '').match(/\((.*?)\)/);
+        if (res && res[1]) {
+            return res[1].split(',').map(function (d) {
+                return d.trim();
+            });
+        }
+        return [];
+    },
+    invoke: function invoke(fn) {
+        var _this = this;
+
+        var locals = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+        var deps = this.annotate(fn).map(function (s) {
+            return locals[s] || _this.get(s, locals);
+        }, this);
+        return fn.apply(null, deps);
+    },
+    _register: function _register(name, service) {
+        this._providers[name] = service;
+    },
+    route: function route(_route, tpl, controller) {
+        var _this2 = this;
+
+        var newRoute = _crossroads2.default.addRoute(_route);
+        newRoute.matched.add(function () {
+            var view = document.getElementById('mvc-view');
+            view.innerHTML = tpl;
+
+            var ctrl = _this2.get(controller + 'Controller');
+            var scope = _this2._cache.$rootScope.$new();
+            _this2.invoke(ctrl, { $scope: scope });
+            _compiler2.default.compile(view, scope);
+        });
+    }
+};
+
+exports.default = Provider;
+
+},{"./compiler.js":4,"./scope.js":12,"crossroads":1}],12:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Scope = function () {
+    function Scope(parent) {
+        _classCallCheck(this, Scope);
+
+        this.$$watchers = [];
+        this.$$children = [];
+        this.$parent = parent;
+    }
+
+    _createClass(Scope, [{
+        key: '$watch',
+        value: function $watch(exp, fn) {
+            this.$$watchers.push({
+                exp: exp,
+                fn: fn,
+                last: JSON.parse(JSON.stringify(this.$eval(exp)))
+            });
+        }
+    }, {
+        key: '$eval',
+        value: function $eval(exp) {
+            if (typeof exp !== 'function') {
+                try {
+                    return eval('this.' + exp);
+                } catch (e) {
+                    return '';
+                }
+            }
+            return exp.call(this);
+        }
+    }, {
+        key: '$new',
+        value: function $new() {
+            var obj = new Scope(this);
+            this.$$children.push(obj);
+            return obj;
+        }
+    }, {
+        key: '$destroy',
+        value: function $destroy() {
+            var pc = this.$parent.$$children;
+            pc.splice(pc.indexOf(this), 1);
+        }
+    }, {
+        key: '$digest',
+        value: function $digest() {
+            var _this = this;
+
+            var dirty = undefined;
+            var current = undefined;
+
+            do {
+                dirty = false;
+                this.$$watchers.forEach(function (watcher) {
+                    current = _this.$eval(watcher.exp);
+                    if (JSON.stringify(watcher.last) !== JSON.stringify(current)) {
+                        watcher.last = JSON.parse(JSON.stringify(current));
+                        dirty = true;
+                        watcher.fn(current);
+                    }
+                });
+            } while (dirty);
+
+            this.$$children.forEach(function (child) {
+                return child.$digest();
+            });
+        }
+    }]);
+
+    return Scope;
+}();
+
+exports.default = Scope;
+
+},{}]},{},[10]);

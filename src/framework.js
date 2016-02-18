@@ -17,3 +17,5 @@ Provider.directive('mvc-click', mvcClick);
 Provider.directive('mvc-controller', mvcController);
 Provider.directive('mvc-model', mvcModel);
 Provider.directive('mvc-repeat', mvcRepeat);
+
+export default window.framework;

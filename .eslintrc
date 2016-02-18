@@ -1,30 +1,36 @@
 {
-	"extends": "airbnb/base",
-	"ecmaFeatures": {
-		"modules": true
-	},
-	"rules": {
-		"indent": [
-			2,
-			4
-		],
-		"max-len": [
-			2,
-			120
-		],
-		"no-param-reassign": 0,
-		"no-eval": 0,
-		"no-loop-func": 0,
-		"quote-props": [
-			2,
-			"consistent-as-needed",
-			{
-				"keywords":
-				true
-			}
-		],
-	},
-	"globals": {
-	},
-	"envs": {}
+  "extends": "airbnb/base",
+  "ecmaFeatures": {
+    "modules": true
+  },
+  "rules": {
+    "indent": [
+      2,
+      4
+    ],
+    "max-len": [
+      2,
+      120
+    ],
+    "no-param-reassign": 0,
+    "no-eval": 0,
+    "no-loop-func": 0,
+    "quote-props": [
+      2,
+      "consistent-as-needed",
+      {
+        "keywords": true
+      }
+    ]
+  },
+  "globals": {
+    "describe": false,
+    "it": false,
+    "expect": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false
+  },
+  "envs": {}
 }
