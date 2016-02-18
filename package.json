@@ -1,8 +1,28 @@
 {
-  "name": "Hw2",
-  "version": "1.0.0",
-  "description": "Automation tools",
-  "main": "app.js",
+  "name": "mpjs-my-framework",
+  "version": "1.0.1",
+  "description": "MPJS Homework",
+  "author": "Oleksandr Blyzniuk <blyzniuk.oleksandr@gmail.com>",
+  "contributors": [{
+  "name": "Oleksandr Blyzniuk",
+  "email": "blyzniuk.oleksandr@gmail.com"
+}],
+  "bin": {},
+  "scripts": {
+    "test": "karma start",
+    "start": "gulp build"
+  },
+  "main": "build/famework.js",
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/blyzniuk/MPJSmyFramework"
+},
+  "bugs": {
+  "url": "https://github.com/blyzniuk/MPJSmyFramework/issues"
+},
+  "keywords": [
+  "example"
+],
   "dependencies": {
     "crossroads": "^0.12.2",
     "hasher": "^1.2.0",
@@ -26,11 +46,12 @@
     "phantomjs-prebuilt": "^2.1.4",
     "watchify": "^3.7.0"
   },
-  "author": "Oleksandr_Blyzniuk",
-  "license": "ISC",
-  "scripts": {
-    "test": "karma start",
-    "start": "gulp"
-  },
-  "repository": {}
+  "preferGlobal": false,
+  "private": false,
+  "publishConfig": {
+  "registry": ""
+},
+  "subdomain": "foobar",
+  "analyze": true,
+  "license": "MIT"
 }
