@@ -1683,7 +1683,7 @@ var Compiler = {
 
 exports.default = Compiler;
 
-},{"./provider.js":11,"crossroads":1,"hasher":2}],5:[function(require,module,exports){
+},{"./provider.js":12,"crossroads":1,"hasher":2}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1854,10 +1854,7 @@ var _mvcRepeat2 = _interopRequireDefault(_mvcRepeat);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-document.addEventListener('DOMContentLoaded', function () {
-    return _compiler2.default.bootstrap();
-});
-window.framework = {
+var framework = {
     Provider: _provider2.default,
     Compiler: _compiler2.default
 };
@@ -1868,9 +1865,26 @@ _provider2.default.directive('mvc-controller', _mvcController2.default);
 _provider2.default.directive('mvc-model', _mvcModel2.default);
 _provider2.default.directive('mvc-repeat', _mvcRepeat2.default);
 
-exports.default = window.framework;
+exports.default = framework;
 
-},{"./compiler.js":4,"./directives/mvc-bind.js":5,"./directives/mvc-click.js":6,"./directives/mvc-controller.js":7,"./directives/mvc-model.js":8,"./directives/mvc-repeat.js":9,"./provider.js":11}],11:[function(require,module,exports){
+},{"./compiler.js":4,"./directives/mvc-bind.js":5,"./directives/mvc-click.js":6,"./directives/mvc-controller.js":7,"./directives/mvc-model.js":8,"./directives/mvc-repeat.js":9,"./provider.js":12}],11:[function(require,module,exports){
+'use strict';
+
+var _framework = require('./framework.js');
+
+var _framework2 = _interopRequireDefault(_framework);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.init = function () {
+    console.log('init');
+    document.addEventListener('DOMContentLoaded', function () {
+        return _framework2.default.Compiler.bootstrap();
+    });
+    return _framework2.default;
+};
+
+},{"./framework.js":10}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1957,7 +1971,7 @@ var Provider = {
 
 exports.default = Provider;
 
-},{"./compiler.js":4,"./scope.js":12,"crossroads":1}],12:[function(require,module,exports){
+},{"./compiler.js":4,"./scope.js":13,"crossroads":1}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2042,4 +2056,4 @@ var Scope = function () {
 
 exports.default = Scope;
 
-},{}]},{},[10]);
+},{}]},{},[11]);

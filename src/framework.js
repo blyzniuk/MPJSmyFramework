@@ -6,8 +6,7 @@ import mvcController from './directives/mvc-controller.js';
 import mvcModel from './directives/mvc-model.js';
 import mvcRepeat from './directives/mvc-repeat.js';
 
-document.addEventListener('DOMContentLoaded', () => Compiler.bootstrap());
-window.framework = {
+const framework = {
     Provider,
     Compiler,
 };
@@ -18,4 +17,4 @@ Provider.directive('mvc-controller', mvcController);
 Provider.directive('mvc-model', mvcModel);
 Provider.directive('mvc-repeat', mvcRepeat);
 
-export default window.framework;
+export default framework;

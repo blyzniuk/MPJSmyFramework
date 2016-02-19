@@ -7,7 +7,7 @@ var browserify = require('browserify');
 
 var path = {
     src: {
-        framework: 'src/framework.js',
+        framework: 'src/index.js',
         frameworkCmps: 'src/**/*.js',
     },
 };
