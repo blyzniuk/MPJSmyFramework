@@ -1,0 +1,161 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'publish',
+1 verbose cli   'mpjs-my-framework' ]
+2 info using npm@3.3.6
+3 info using node@v5.0.0
+4 verbose publish [ 'mpjs-my-framework' ]
+5 silly cache add args [ 'mpjs-my-framework', null ]
+6 verbose cache add spec mpjs-my-framework
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: 'mpjs-my-framework',
+7 silly cache add   scope: null,
+7 silly cache add   name: 'mpjs-my-framework',
+7 silly cache add   rawSpec: '',
+7 silly cache add   spec: '*',
+7 silly cache add   type: 'range' }
+8 silly addNamed mpjs-my-framework@*
+9 verbose addNamed "*" is a valid semver range for mpjs-my-framework
+10 silly addNameRange { name: 'mpjs-my-framework', range: '*', hasData: false }
+11 silly mapToRegistry name mpjs-my-framework
+12 silly mapToRegistry using default registry
+13 silly mapToRegistry registry https://registry.npmjs.org/
+14 silly mapToRegistry uri https://registry.npmjs.org/mpjs-my-framework
+15 verbose addNameRange registry:https://registry.npmjs.org/mpjs-my-framework not in flight; fetching
+16 verbose request uri https://registry.npmjs.org/mpjs-my-framework
+17 verbose request no auth needed
+18 info attempt registry request try #1 at 11:21:34
+19 verbose request using bearer token for auth
+20 verbose request id 7f17547c169158d2
+21 verbose etag "T0RAFP8YGG8I4C6JKA9AC5B6"
+22 http request GET https://registry.npmjs.org/mpjs-my-framework
+23 http 304 https://registry.npmjs.org/mpjs-my-framework
+24 verbose headers { 'cache-control': 'max-age=300',
+24 verbose headers   'accept-ranges': 'bytes',
+24 verbose headers   date: 'Fri, 19 Feb 2016 09:21:34 GMT',
+24 verbose headers   via: '1.1 varnish',
+24 verbose headers   connection: 'keep-alive',
+24 verbose headers   'x-served-by': 'cache-fra1248-FRA',
+24 verbose headers   'x-cache': 'MISS',
+24 verbose headers   'x-cache-hits': '0',
+24 verbose headers   'x-timer': 'S1455873693.900474,VS0,VE182' }
+25 silly get cb [ 304,
+25 silly get   { 'cache-control': 'max-age=300',
+25 silly get     'accept-ranges': 'bytes',
+25 silly get     date: 'Fri, 19 Feb 2016 09:21:34 GMT',
+25 silly get     via: '1.1 varnish',
+25 silly get     connection: 'keep-alive',
+25 silly get     'x-served-by': 'cache-fra1248-FRA',
+25 silly get     'x-cache': 'MISS',
+25 silly get     'x-cache-hits': '0',
+25 silly get     'x-timer': 'S1455873693.900474,VS0,VE182' } ]
+26 verbose etag https://registry.npmjs.org/mpjs-my-framework from cache
+27 verbose get saving mpjs-my-framework to C:\Users\Oleksandr\AppData\Roaming\npm-cache\registry.npmjs.org\mpjs-my-framework\.cache.json
+28 silly addNameRange number 2 { name: 'mpjs-my-framework', range: '*', hasData: true }
+29 silly addNameRange versions [ 'mpjs-my-framework', [ '1.0.1', '1.0.2', '1.0.3' ] ]
+30 silly addNamed mpjs-my-framework@1.0.3
+31 verbose addNamed "1.0.3" is a plain semver version for mpjs-my-framework
+32 silly cache afterAdd mpjs-my-framework@1.0.3
+33 verbose afterAdd C:\Users\Oleksandr\AppData\Roaming\npm-cache\mpjs-my-framework\1.0.3\package\package.json not in flight; writing
+34 verbose afterAdd C:\Users\Oleksandr\AppData\Roaming\npm-cache\mpjs-my-framework\1.0.3\package\package.json written
+35 silly publish { name: 'mpjs-my-framework',
+35 silly publish   version: '1.0.3',
+35 silly publish   description: 'MPJS Homework',
+35 silly publish   author:
+35 silly publish    { name: 'Oleksandr Blyzniuk',
+35 silly publish      email: 'blyzniuk.oleksandr@gmail.com' },
+35 silly publish   contributors:
+35 silly publish    [ { name: 'Oleksandr Blyzniuk',
+35 silly publish        email: 'blyzniuk.oleksandr@gmail.com' } ],
+35 silly publish   bin: {},
+35 silly publish   scripts: { start: 'gulp build', test: 'karma start' },
+35 silly publish   main: 'build/famework.js',
+35 silly publish   repository:
+35 silly publish    { type: 'git',
+35 silly publish      url: 'git+https://github.com/blyzniuk/MPJSmyFramework.git' },
+35 silly publish   bugs: { url: 'https://github.com/blyzniuk/MPJSmyFramework/issues' },
+35 silly publish   keywords: [ 'example' ],
+35 silly publish   dependencies: { crossroads: '^0.12.2', hasher: '^1.2.0', signals: '1.0.0' },
+35 silly publish   devDependencies:
+35 silly publish    { 'babel-preset-es2015': '^6.3.13',
+35 silly publish      babelify: '^7.2.0',
+35 silly publish      browserify: '^13.0.0',
+35 silly publish      del: '^2.2.0',
+35 silly publish      eslint: '^2.1.0',
+35 silly publish      'eslint-config-airbnb': '^3.1.0',
+35 silly publish      gulp: '^3.9.0',
+35 silly publish      'gulp-babel': '^6.1.1',
+35 silly publish      'gulp-eslint': '^1.1.1',
+35 silly publish      'jasmine-core': '^2.4.1',
+35 silly publish      karma: '^0.13.21',
+35 silly publish      'karma-browserify': '^5.0.1',
+35 silly publish      'karma-jasmine': '^0.3.7',
+35 silly publish      'karma-phantomjs-launcher': '^1.0.0',
+35 silly publish      'phantomjs-prebuilt': '^2.1.4',
+35 silly publish      watchify: '^3.7.0' },
+35 silly publish   preferGlobal: false,
+35 silly publish   private: false,
+35 silly publish   publishConfig: {},
+35 silly publish   subdomain: 'foobar',
+35 silly publish   analyze: true,
+35 silly publish   license: 'MIT',
+35 silly publish   readme: '# My Framework\r\n[Lecture page: Automation tools](https://kb.epam.com/display/GDOKB/Lecture2%3A+JS+automation+Tools+and+Code+quality+tools+and+practices)\r\n\r\n### Homework Variant a\r\nIn homework i used:\r\n* to manage dependencies: npm\r\n* to build project: gulp\r\n* to check code quality: eslint\r\n* to test framework: jasmine\r\nI need not to rewrite each and every file to use \'strict mode\', because Babel do it for me.\r\n\r\n### To start example:\r\n1. Clone project.\r\n2. In folder \'~/Hw2/my_framework\' run \'npm i\'.\r\n3. Run \'npm start\'.\r\n\r\nTo run tests: \'npm test\'.\r\n\r\n\r\n',
+35 silly publish   readmeFilename: 'readme.md',
+35 silly publish   gitHead: 'bf7de7a3fc2441d6df28f624dba38931bfe005b5',
+35 silly publish   homepage: 'https://github.com/blyzniuk/MPJSmyFramework#readme',
+35 silly publish   _id: 'mpjs-my-framework@1.0.3',
+35 silly publish   _shasum: '64eee7c42e587ea537fae17318a696dfe9c65ea5',
+35 silly publish   _from: 'mpjs-my-framework@*' }
+36 info lifecycle mpjs-my-framework@1.0.3~prepublish: mpjs-my-framework@1.0.3
+37 silly lifecycle mpjs-my-framework@1.0.3~prepublish: no script for prepublish, continuing
+38 verbose getPublishConfig {}
+39 silly mapToRegistry name mpjs-my-framework
+40 silly mapToRegistry using default registry
+41 silly mapToRegistry registry https://registry.npmjs.org/
+42 silly mapToRegistry uri https://registry.npmjs.org/mpjs-my-framework
+43 verbose publish registryBase https://registry.npmjs.org/
+44 silly publish uploading C:\Users\Oleksandr\AppData\Roaming\npm-cache\mpjs-my-framework\1.0.3\package.tgz
+45 verbose request uri https://registry.npmjs.org/mpjs-my-framework
+46 verbose request sending authorization for write operation
+47 info attempt registry request try #1 at 11:21:34
+48 verbose request using bearer token for auth
+49 verbose request id 1275cbf84ecbdd9d
+50 http request PUT https://registry.npmjs.org/mpjs-my-framework
+51 http 403 https://registry.npmjs.org/mpjs-my-framework
+52 verbose headers { 'content-type': 'application/json',
+52 verbose headers   'cache-control': 'max-age=300',
+52 verbose headers   'content-length': '95',
+52 verbose headers   'accept-ranges': 'bytes',
+52 verbose headers   date: 'Fri, 19 Feb 2016 09:21:35 GMT',
+52 verbose headers   via: '1.1 varnish',
+52 verbose headers   connection: 'keep-alive',
+52 verbose headers   'x-served-by': 'cache-fra1222-FRA',
+52 verbose headers   'x-cache': 'MISS',
+52 verbose headers   'x-cache-hits': '0',
+52 verbose headers   'x-timer': 'S1455873694.375812,VS0,VE1305' }
+53 verbose request invalidating C:\Users\Oleksandr\AppData\Roaming\npm-cache\registry.npmjs.org\mpjs-my-framework on PUT
+54 error publish Failed PUT 403
+55 verbose stack Error: "You cannot publish over the previously published version 1.0.3." : mpjs-my-framework
+55 verbose stack     at makeError (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:264:12)
+55 verbose stack     at CachingRegistryClient.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:252:14)
+55 verbose stack     at Request._callback (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:172:14)
+55 verbose stack     at Request.self.callback (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:198:22)
+55 verbose stack     at emitTwo (events.js:87:13)
+55 verbose stack     at Request.emit (events.js:172:7)
+55 verbose stack     at Request.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:1063:14)
+55 verbose stack     at emitOne (events.js:82:20)
+55 verbose stack     at Request.emit (events.js:169:7)
+55 verbose stack     at IncomingMessage.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:1009:12)
+56 verbose statusCode 403
+57 verbose pkgid mpjs-my-framework
+58 verbose cwd C:\Users\Oleksandr\Desktop\MPJSmyFramework
+59 error Windows_NT 6.1.7601
+60 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "publish" "mpjs-my-framework"
+61 error node v5.0.0
+62 error npm  v3.3.6
+63 error code E403
+64 error "You cannot publish over the previously published version 1.0.3." : mpjs-my-framework
+65 error If you need help, you may report this error at:
+65 error     <https://github.com/npm/npm/issues>
+66 verbose exit [ 1, true ]
