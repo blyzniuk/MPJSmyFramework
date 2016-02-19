@@ -11,10 +11,10 @@ const framework = {
     Compiler,
 };
 
-Provider.directive('mvc-bind', mvcBind);
-Provider.directive('mvc-click', mvcClick);
-Provider.directive('mvc-controller', mvcController);
-Provider.directive('mvc-model', mvcModel);
-Provider.directive('mvc-repeat', mvcRepeat);
+framework.Provider.directive('mvc-bind', mvcBind);
+framework.Provider.directive('mvc-click', mvcClick);
+framework.Provider.directive('mvc-controller', mvcController);
+framework.Provider.directive('mvc-model', mvcModel);
+framework.Provider.directive('mvc-repeat', mvcRepeat);
 
 export default framework;

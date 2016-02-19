@@ -1859,11 +1859,11 @@ var framework = {
     Compiler: _compiler2.default
 };
 
-_provider2.default.directive('mvc-bind', _mvcBind2.default);
-_provider2.default.directive('mvc-click', _mvcClick2.default);
-_provider2.default.directive('mvc-controller', _mvcController2.default);
-_provider2.default.directive('mvc-model', _mvcModel2.default);
-_provider2.default.directive('mvc-repeat', _mvcRepeat2.default);
+framework.Provider.directive('mvc-bind', _mvcBind2.default);
+framework.Provider.directive('mvc-click', _mvcClick2.default);
+framework.Provider.directive('mvc-controller', _mvcController2.default);
+framework.Provider.directive('mvc-model', _mvcModel2.default);
+framework.Provider.directive('mvc-repeat', _mvcRepeat2.default);
 
 exports.default = framework;
 
@@ -1878,11 +1878,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.init = function () {
     console.log('init');
-    document.addEventListener('DOMContentLoaded', function () {
-        return _framework2.default.Compiler.bootstrap();
-    });
     return _framework2.default;
-};
+}; /* eslint no-unused-vars:0 */
 
 },{"./framework.js":10}],12:[function(require,module,exports){
 'use strict';
